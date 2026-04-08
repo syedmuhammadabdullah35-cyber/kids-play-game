@@ -77,7 +77,8 @@ export default function App() {
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden font-sans bg-sky-50">
+    /* FIXED: Changed h-screen to min-h-screen and overflow-hidden to overflow-y-auto */
+    <div className="relative w-full min-h-screen overflow-y-auto font-sans bg-sky-50 pb-10">
       <AnimatePresence mode="wait">
         {state.currentScreen === 'home' && (
           <motion.div
@@ -86,7 +87,8 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.1 }}
             transition={{ type: 'spring', damping: 20, stiffness: 100 }}
-            className="w-full h-full"
+            /* FIXED: Removed h-full to allow natural height */
+            className="w-full"
           >
             <Home 
               onSelectGame={handleSelectGame} 
@@ -103,7 +105,7 @@ export default function App() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ type: 'spring', damping: 25, stiffness: 120 }}
-            className="w-full h-full"
+            className="w-full min-h-screen"
           >
             {renderGame()}
           </motion.div>
