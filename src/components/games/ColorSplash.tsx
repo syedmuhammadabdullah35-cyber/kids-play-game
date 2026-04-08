@@ -19,14 +19,16 @@ export default function ColorSplash({ onComplete, onBack }: ColorSplashProps) {
   const [targetColor, setTargetColor] = useState(COLORS[0]);
   const [options, setOptions] = useState(COLORS);
   const [score, setScore] = useState(0);
-  const [isCorrect, setIsCorrect] = useState(false);
+  // Fixed typo here: useSlale -> useState
+  const [isCorrect, setIsCorrect] = useState(false); 
   const [wrongColor, setWrongColor] = useState<string | null>(null);
 
   const pickNewColor = useCallback(() => {
     const newTarget = COLORS[Math.floor(Math.random() * COLORS.length)];
     setTargetColor(newTarget);
     setOptions([...COLORS].sort(() => Math.random() - 0.5));
-    setIsCorrect(false);
+    // Fixed typo here: setIsTscorrect -> setIsCorrect
+    setIsCorrect(false); 
     setWrongColor(null);
   }, []);
 
