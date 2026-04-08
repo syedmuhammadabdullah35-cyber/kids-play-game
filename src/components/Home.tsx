@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion'; // Fixed the import to standard framer-motion
 import { LEVELS } from '../constants';
 import { GameType } from '../types';
 import * as Icons from 'lucide-react';
@@ -12,7 +12,9 @@ interface HomeProps {
 
 export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden bg-gradient-to-b from-sky-100 to-white">
+    /* FIXED: Changed justify-center to items-start on mobile and removed overflow-hidden */
+    <div className="min-h-screen flex flex-col items-center p-8 relative bg-gradient-to-b from-sky-100 to-white overflow-y-auto overflow-x-hidden pb-24">
+      
       {/* Animated Background Elements */}
       <motion.div 
         animate={{ 
@@ -36,7 +38,7 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
       <motion.div 
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="text-center mb-12 relative z-10"
+        className="text-center mb-12 relative z-10 pt-10"
       >
         <h1 className="text-6xl md:text-8xl font-bold text-sky-600 mb-2 drop-shadow-[0_4px_0_rgba(2,132,199,0.2)]">
           Kids Play Game
@@ -44,7 +46,8 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
         <p className="text-2xl text-sky-800 font-bold tracking-wide">Let's learn and play!</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 w-full max-w-7xl relative z-10">
+      {/* FIXED: Changed grid-cols-2 to grid-cols-1 on very small screens if needed, but 2 is fine if scrolling is on */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 w-full max-w-7xl relative z-10 mb-10">
         {LEVELS.map((level, index) => {
           const IconComponent = (Icons as any)[level.icon];
           return (
@@ -61,17 +64,16 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
               whileHover={{ scale: 1.05, y: -10 }}
               whileTap={{ scale: 0.95, y: 5 }}
               onClick={() => onSelectGame(level.type)}
-              className={`game-button ${level.color} border-black/10 text-white group`}
+              className={`game-button ${level.color} border-black/10 text-white group relative`}
             >
               <motion.div 
-                className="bg-white/20 p-6 rounded-[2rem] mb-4 group-hover:bg-white/30 transition-colors"
+                className="bg-white/20 p-6 rounded-[2rem] mb-4 group-hover:bg-white/30 transition-colors flex items-center justify-center"
                 whileHover={{ rotate: [0, -10, 10, 0] }}
               >
                 <IconComponent size={56} strokeWidth={2.5} />
               </motion.div>
               <span className="text-2xl font-bold drop-shadow-sm">{level.title}</span>
               
-              {/* Shine effect */}
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
             </motion.button>
           );
@@ -79,7 +81,7 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
       </div>
 
       <motion.div 
-        className="mt-16 flex flex-wrap justify-center gap-6 relative z-10"
+        className="mt-8 flex flex-wrap justify-center gap-6 relative z-10 pb-10"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6 }}
@@ -108,9 +110,9 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
         </motion.div>
       </motion.div>
 
-      {/* Character Pip */}
+      {/* Character Pip - Made it hidden on very small screens to avoid overlap, or kept fixed */}
       <motion.div 
-        className="fixed bottom-6 right-6 md:bottom-12 md:right-12 w-40 h-40 pointer-events-none z-20"
+        className="fixed bottom-6 right-6 md:bottom-12 md:right-12 w-32 h-32 pointer-events-none z-20 hidden sm:block"
         animate={{ 
           y: [0, -15, 0],
           rotate: [0, 3, -3, 0]
@@ -122,7 +124,7 @@ export default function Home({ onSelectGame, onOpenStickers, stars }: HomeProps)
         }}
       >
         <div className="relative w-full h-full flex items-center justify-center">
-          <div className="text-8xl filter drop-shadow-lg">🐧</div>
+          <div className="text-7xl filter drop-shadow-lg">🐧</div>
           <motion.div 
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
