@@ -7,8 +7,11 @@
 
 @layer base {
   body {
-    @apply bg-sky-100 text-slate-800 overflow-hidden select-none touch-none;
+    /* FIXED: Changed overflow-hidden to overflow-x-hidden and removed touch-none */
+    @apply bg-sky-100 text-slate-800 overflow-x-hidden select-none;
     font-family: var(--font-sans);
+    /* Extra safety for smooth mobile scrolling */
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -31,4 +34,3 @@
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
-
